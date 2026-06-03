@@ -1,0 +1,67 @@
+button{
+    width: 100px;
+    height: 100px;
+    background: #eef2f5;
+    border: 1px solid #cbd5e1;
+    color: #1e2a3e;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    margin: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s ease;
+}
+.button{
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* Заставляем body занимать всю высоту экрана */
+    min-height: 100vh;
+    
+    /* Включаем flex-контейнер */
+    display: flex;
+    
+    /* Горизонтальное выравнивание (по центру) */
+    justify-content: center;
+    
+    /* Вертикальное выравнивание (по центру) */
+    align-items: center;
+    
+    /* Фон на выбор (для красоты) */
+    background: #f1f5f9;
+    
+    /* Шрифт по умолчанию */
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Твой контейнер с кнопками — будет в центре */
+.container {
+    /* Фон, тень, скругление — для красоты */
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Если нужно выровнять внутренние элементы */
+    
+}
+.result{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.saved{
+    color: 	#888888	;
+}
