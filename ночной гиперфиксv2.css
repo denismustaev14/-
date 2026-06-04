@@ -65,3 +65,16 @@ body {
 .saved{
     color: 	#888888	;
 }
+.btn-undo{
+    background-color: #b87373;
+}
+
+.stats-row {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+}
+
+.diff{
+    font-size: 0.875rem
+}
