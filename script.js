@@ -7,6 +7,8 @@ const result = document.querySelector(".result_text");
 const saved = document.querySelector(".saved");
 const undo = document.querySelector(".btn-undo");
 const diff = document.querySelector(".diff");
+const syncButton = document.querySelector('.btn-sync');
+const resetAllButton = document.querySelector('.btn-reset-all');
 
 const now = new Date();
 let count = 0;
@@ -33,34 +35,40 @@ full.addEventListener("click", function () {
   count = count + 20.5;
   result.textContent = count;
   updateDiff();
+  saveToLocalStorage();
 });
 call.addEventListener("click", function () {
   lastCount = count;
   count = count + 17.5;
   result.textContent = count;
   updateDiff();
+  saveToLocalStorage();
 });
 nto.addEventListener("click", function () {
   lastCount = count;
   count = count + 3;
   result.textContent = count;
   updateDiff();
+  saveToLocalStorage();
 });
 email.addEventListener("click", function () {
   lastCount = count;
   count = count + 7.5;
   result.textContent = count;
   updateDiff();
+  saveToLocalStorage();
 });
 pro.addEventListener("click", function () {
   lastCount = count;
   count = count + 30;
   result.textContent = count;
   updateDiff();
+  saveToLocalStorage();
 });
 undo.addEventListener("click", function () {
   count = lastCount;
   updateDiff();
+  saveToLocalStorage();
 });
 
 function checkAndReset() {
@@ -77,3 +85,33 @@ function checkAndReset() {
   saved.textContent = countSav;
 }
 setInterval(checkAndReset, 1000);
+
+syncButton.addEventListener("click", function () {
+  countSav = count + countSav;
+    count = 0;
+  result.textContent = count;
+  saved.textContent = countSav;
+}
+);
+
+function saveToLocalStorage(){
+  localStorage.setItem('count', count);
+  localStorage.setItem('countSav', countSav)
+}
+const savedCount = localStorage.getItem('count');
+if (savedCount !== null) {
+    count = Number(savedCount);
+}
+
+const savedCountSav = localStorage.getItem('countSav');
+if (savedCountSav !== null) {
+    countSav = Number(savedCountSav);
+}
+result.textContent = count;
+saved.textContent = countSav;
+
+resetAllButton.addEventListener("click", function () {
+  localStorage.clear();
+  count = 0
+  countSav = 0
+});
