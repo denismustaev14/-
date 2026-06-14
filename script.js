@@ -32,7 +32,7 @@ function updateDiff() {
 
 full.addEventListener("click", function () {
   lastCount = count;
-  count = count + 20.5;
+  count = count + 20.7;
   result.textContent = count;
   updateDiff();
   saveToLocalStorage();
