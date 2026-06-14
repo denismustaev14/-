@@ -32,14 +32,14 @@ function updateDiff() {
 
 full.addEventListener("click", function () {
   lastCount = count;
-  count = count + 20.7;
+  count = count + 20.5;
   result.textContent = count;
   updateDiff();
   saveToLocalStorage();
 });
 call.addEventListener("click", function () {
   lastCount = count;
-  count = count + 17.7;
+  count = count + 17.5;
   result.textContent = count;
   updateDiff();
   saveToLocalStorage();
