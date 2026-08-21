@@ -82,41 +82,16 @@ function updateDiff() {
   
 }
 
-full.addEventListener("click", function () {
-  lastCount = count;
-  count = count + getBonus("full");
-  updateDiff();
-  saveToLocalStorage();
-  result.textContent = count.toFixed(2);
+document.querySelectorAll('.btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    lastCount = count;
+    count += getBonus(this.dataset.type);
+    updateDiff();
+    saveToLocalStorage();
+    result.textContent = count.toFixed(2);
+  });
 });
-call.addEventListener("click", function () {
-  lastCount = count;
-  count = count + getBonus("call");
-  updateDiff();
-  saveToLocalStorage()
-  result.textContent = count.toFixed(2);
-});
-nto.addEventListener("click", function () {
-  lastCount = count;
-  count = count + getBonus("nto");
-  updateDiff();
-  saveToLocalStorage()
-  result.textContent = count.toFixed(2);
-});
-email.addEventListener("click", function () {
-  lastCount = count;
-  count = count + getBonus("email");
-  updateDiff();
-  saveToLocalStorage()
-  result.textContent = count.toFixed(2);
-});
-pro.addEventListener("click", function () {
-  lastCount = count;
-  count = count + getBonus("pro");
-  updateDiff();
-  saveToLocalStorage()
-  result.textContent = count.toFixed(2);
-});
+
 undo.addEventListener("click", function () {
   count = lastCount;
   updateDiff();
@@ -166,3 +141,8 @@ resetAllButton.addEventListener("click", function () {
   count = 0;
   countSav = 0;
 });
+
+
+
+
+
