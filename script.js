@@ -11,7 +11,32 @@ const syncButton = document.querySelector(".btn-sync");
 const resetAllButton = document.querySelector(".btn-reset-all");
 const rusBtn = document.querySelector(".rus");
 const belBtn = document.querySelector(".bel");
+const btnInput = document.querySelector(".btn-input");
+const input = document.querySelector(".standard");
 
+let standardSav = 0;
+
+input.addEventListener("keydown", function (event) {
+  const key = event.key;
+  if (
+    (key >= "0" && key <= "9") ||
+    key === "Backspace" ||
+    key === "Delete" ||
+    key === "Tab" ||
+    key === "ArrowLeft" ||
+    key === "ArrowRight" ||
+    key === "." ||
+    key === ","
+  ) {
+  } else {
+    event.preventDefault();
+  }
+});
+
+btnInput.addEventListener("click", function () {
+  standardSav = Number(input.value);
+  console.log(standardSav);
+});
 
 const rates = {
   russia: {
@@ -20,15 +45,15 @@ const rates = {
     nto: 3,
     email: 7.5,
     pro: 30,
-    qwe: 10
+    defaultNorm: 10,
   },
   belarus: {
     full: 0.75,
     call: 0.64,
     nto: 0.1,
     email: 0.27,
-    pro: 1.10,
-    qwe: 0.37
+    pro: 1.1,
+    defaultNorm: 0.37,
   },
 };
 
@@ -37,6 +62,8 @@ let currentCountry = "russia";
 function getBonus(type) {
   return rates[currentCountry][type];
 }
+
+let log = [];
 
 const now = new Date();
 let count = 0;
@@ -57,6 +84,8 @@ rusBtn.addEventListener("click", function () {
   pro.textContent = "проф. голос (30)";
   rusBtn.style.backgroundColor = "white";
   belBtn.style.backgroundColor = "#eef2f5";
+  standardSav = 0;
+  input.value = "";
 });
 belBtn.addEventListener("click", function () {
   currentCountry = "belarus";
@@ -68,32 +97,43 @@ belBtn.addEventListener("click", function () {
   pro.textContent = "проф. голос (1.10)";
   rusBtn.style.backgroundColor = "#eef2f5";
   belBtn.style.backgroundColor = "white";
+  standardSav = 0;
+  input.value = "";
 });
 
 function updateDiff() {
   minutes = new Date().getMinutes();
-  deviation = count - minutes * getBonus("qwe");
+  if (standardSav === 0) {
+    deviation = count - minutes * getBonus("defaultNorm");
+  } else {
+    deviation = count - (standardSav / 60) * minutes;
+  }
+
   diff.textContent = deviation.toFixed(2);
   if (deviation < 0) {
     diff.style.color = "#d9534f";
   } else {
     diff.style.color = "#27ae60";
   }
-  
 }
 
-document.querySelectorAll('.btn').forEach(btn => {
-  btn.addEventListener('click', function() {
+document.querySelectorAll(".btn").forEach((btn) => {
+  btn.addEventListener("click", function () {
     lastCount = count;
     count += getBonus(this.dataset.type);
     updateDiff();
-    saveToLocalStorage();
     result.textContent = count.toFixed(2);
+    log.push(getBonus(this.dataset.type));
+    saveToLocalStorage();
+    console.log(log);
   });
 });
 
 undo.addEventListener("click", function () {
-  count = lastCount;
+  if (log.length === 0) return;
+  count = count - log[log.length - 1];
+  log.pop();
+  console.log(log);
   updateDiff();
   saveToLocalStorage();
 });
@@ -123,7 +163,20 @@ syncButton.addEventListener("click", function () {
 function saveToLocalStorage() {
   localStorage.setItem("count", count);
   localStorage.setItem("countSav", countSav);
+  localStorage.setItem("log", JSON.stringify(log));
+  localStorage.setItem("standardSav", standardSav);
 }
+
+const savedStandardSav = localStorage.getItem("standardSav");
+if (savedStandardSav !== null) {
+  standardSav = Number(savedStandardSav);
+}
+
+const savedLog = localStorage.getItem("log");
+if (savedLog !== null) {
+  log = JSON.parse(savedLog);
+}
+
 const savedCount = localStorage.getItem("count");
 if (savedCount !== null) {
   count = Number(savedCount);
@@ -141,8 +194,3 @@ resetAllButton.addEventListener("click", function () {
   count = 0;
   countSav = 0;
 });
-
-
-
-
-

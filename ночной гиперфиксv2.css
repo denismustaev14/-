@@ -97,3 +97,12 @@ body {
 .rus{
     background-color: white;
 }
+.btn-input{
+    width: 100px;
+    height: 40px;
+}
+.standard{
+    padding: 5px;
+    border-radius: 5px;
+    height: 25px;
+}
